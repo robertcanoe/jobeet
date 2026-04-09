@@ -1,0 +1,15 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Block direct web access to private project directories and sensitive files.
+    RewriteRule ^(app|cache|logs|tests|vendor|views)(/.*)?$ - [F,L,NC]
+    RewriteRule ^(composer\.json|composer\.lock|\.env|\.env\.example)$ - [F,L,NC]
+
+    # Keep public as the only web entry point.
+    RewriteRule ^public/ - [L]
+
+    # Forward all requests to the public directory.
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+</IfModule>
